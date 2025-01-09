@@ -1,0 +1,62 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+import numpy as np
+
+
+data=pd.read_csv("/content/student-mat.csv",sep=";")
+print(data.head())
+print(data.info())
+#MISSING VALUES
+print(data.isnull().sum())
+data= data.drop_duplicates()
+#DATA ANALYSIS
+
+#QUESTION 1:
+
+Average_score= data['G3'].mean()
+print(Average_score)
+
+#QUESTION 2:
+
+above_15= len(data[data['G3']>15])
+print(above_15)
+
+#QUESTION 3:
+
+correlation= data['studytime'].corr(data['G3'])
+print(correlation)
+
+#QUESTION 4:
+
+average_grade_by_sex= data.groupby('sex')['G3'].mean()
+print(average_grade_by_sex)
+
+
+
+#HISTOGRAM OF FINAL FIGURES
+
+plt.hist(data['G3'], bins=10)
+plt.xlabel('Final Figure')
+plt.ylabel('Frequency')
+plt.title('Histogram of Final Figures')
+plt.show()
+
+
+#SCATTERPLOT OF STUDYTIME AND FINAL GRADES
+
+plt.scatter(data['studytime'], data['G3'])
+plt.xlabel('Study Time')
+plt.ylabel('Final Grade')
+plt.title('Scatterplot of Study Time vs. Final Grade')
+plt.show()
+
+
+#BAR CHART OF AVERAGE SCORES BY GENDER
+
+average_scores_by_gender = data.groupby('sex')['G3'].mean()
+plt.bar(average_scores_by_gender.index, average_scores_by_gender.values)
+plt.xlabel('Gender')
+plt.ylabel('Average Score')
+plt.title('Bar Chart of Average Scores by Gender')
+plt.show()
